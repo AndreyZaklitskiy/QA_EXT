@@ -1,0 +1,48 @@
+* {
+	box-sizing: border-box;
+}
+
+.app {
+	width: 500px;
+	font-size: 14px;
+	margin: 15px;
+	background-color: #212121;
+	color: black;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	
+}
+.app__inp {
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 50px;
+	width: 100px;
+	border: 3px solid yellow;
+	background-color: grey;
+}
+.btn {
+	cursor: pointer;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	width: 100px;
+	height: 50px;
+	background-color: yellow;
+}
+.btn__ok {
+	background-color: grey;
+}
+
+.returne {
+	border: 3px solid yellow;
+	display: flex;
+	flex-direction: column;
+}
+.returne > div {
+	margin-bottom: 5px;
+}

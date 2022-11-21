@@ -1,0 +1,29 @@
+{
+	"manifest_version": 3,
+	"name": "QA_DATA_Checker",
+	"short_name": "Checker",
+	"version": "1.0.1",
+	// "scripts": [
+	// 	"./background.js"
+	//   ],
+	// "icons": {
+	// 	"16": "icon_16.png",
+	// 	"48": "icon_48.png",
+	// 	"128": "icon_128.png"
+	//   },
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js":["scripsts/main_test.js"],
+			"css":["styles/styles.css"]
+		}
+	],
+	"action": {
+		"default_popup": "popup.html",
+		"default_title": "Do it!:)"
+		// "default_icon": "icon_16.png",
+	},
+	"permissions": [
+
+	]
+}
