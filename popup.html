@@ -5,42 +5,49 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>QTY_CONTROL_EXT</title>
-	<link rel="stylesheet" href="styles.css">
-	<script src="/scripts/popup.js"></script>
+	<link rel="stylesheet" href="styles/bootstrap.min.css">
+	<link rel="stylesheet" href="styles/styles.css">
+	<script src="scripts/vue.js"></script>
+	
 </head>
 <body>
-	<!-- Start -->
-	<div class="app">
-		<input type="text" class="app__inp">
-		<div class="app__start btn ">
-			START!
-		</div>
-		<div class="app__ok btn btn__ok">
-			OK!
-		</div>
+	<div class="wrapper">
+		<div class="app">
+			<div class="one">
+				<div class="input-wrapper">
+					<label>Номер Магазина</label>
+					<input class="form-control" type="number" v-model="{{ id }}">
+				</div>
+				<div class="input-wrapper">
+					<label>Дата</label>
+					<input class="form-control" type="text" v-model="{{ date }}">
+				</div>
+				<!-- <div class="input-wrapper">
+					<label>Від</label>
+					<input class="form-control" type="number" v-model="id">
+				</div> -->
+				<button class="one__search">Шукати</button>
+			</div>
+			<div class="some">
 
-		<div class="returne">
-			<div class="num"></div>
-			<div class="qty"></div>
-			<div class="items"></div>
-			<div class="tables"></div>
+			</div>
 		</div>
 	</div>
 
 
+	<script>
+		vue.createApp({
+			data : ()=> ({
+				id : 313,
+				date : '24.11.2022'
+			}),
+			computed: {
 
-	<div class="custom-try">
-		<h2>Обработать магазины:</h2>
-		<div class="inp-wrap">
-			<label for="">от:</label>
-			<input type="text" name="">
-		</div>
-		<div class="inp-wrap">
-			<label for="">до:</label>
-			<input type="text" name="">
-		</div>
-		<input type="submit">Обработать</input>
-		<input type="submit">Обработать по умолчанию (1 - 999)</input>
-	</div>
+			},
+			methods: {
+
+			}
+		})
+	</script>
 </body>
 </html>
