@@ -31,8 +31,8 @@ async function parseNumbers(date = getActualDate()) {
 					qty : 0,
 					lngth: prevData.length
 				}
-				for(let i = 0; i < prevData.length; i++){
-					result.qty += prevData[i].Qty
+				for(let idx = 0; idx < prevData.length; idx++){
+					result.qty += prevData[idx].Qty
 				};
 				results.push(result);
 			}).then(result => {
