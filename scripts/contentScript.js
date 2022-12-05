@@ -1,30 +1,53 @@
 //const numbers = ['10', '313'];
-const result = [];
+const results = [];
 
 //let tok = document.querySelector('input[name=_token]').value;
 
-async function parseNumbers() {
+async function parseNumbers(date = getActualDate()) {
 	for(let i = 0; i < 10; i++){
 		console.log('парсим магаз -', i, ', за', getActualDate());
-		await sendValues(i, getActualDate());
 		try {
-			await getData().then();
+			await axios.post('https://qa.avrora.lan/wms/init',
+			{
+				_token: _security_hash,
+				storage_number : i,
+				storage_date: date,
+				camera: 3
+			}).then(res => {
+				console.log(res);
+				return res;
+			});
+		}catch {
+			continue;
+		}
+		console.log('запит надіслано.');
+		try {
+			await axios.get('/wms/workitems/')
+			.then(res => {
+				let prevData = res.data;
+				console.log(res.data);//!!!!!!!!!!!!!
+				const result = {
+					num : i,
+					qty : 0,
+					lngth: prevData.length
+				}
+				for(let i = 0; i < prevData.length; i++){
+					result.qty += prevData[i].Qty
+				};
+				results.push(result);
+			}).then(result => {
+				console.log('наступний >>>')
+				window.location.replace("https://qa.avrora.lan/wms/newinvoice");
+				return result;
+			})
 		}catch(err) {
-			if(statuser = 0) {
-				// console.log(err);
+				console.log(err);
 				console.log(`не відкрилось ${i} !!!`);
 				continue;
-			}
 		}
-		
-		await parseData();
-		statuser = 0;
-		await exit();
 	}
 }
-
-
-async function sendValues(num, date = getActualDate()) {
+/*async function sendValues(num, date = getActualDate()) {
 	axios.post('https://qa.avrora.lan/wms/init',
 	{
 		_token: _security_hash,
@@ -33,63 +56,78 @@ async function sendValues(num, date = getActualDate()) {
 		camera: 3
 	}).then(res => {
 		console.log(res);
+		return res;
 	})
+	
+}*/
 
-}
-
-let prevData;
-let statuser;
-async function getData() {
+/*async function dataHandler() {
 	axios.get('/wms/workitems/')
 	.then(res => {
-		if(res.status == 404 || res.status == 500) {
-			statuser = 0;
-		}else if(res.status == 200 || res.status == 202 || res.status == 302) {
-			statuser = 1;
-		}else {
-			statuser = 0;
-		}
-		prevData = res.data;
+		let prevData = res.data;
 		console.log(res.data);//!!!!!!!!!!!!!
+		const result = {
+			num : '',
+			qty : 0,
+			lngth: prevData.length
+			// tables: [],
+			// top3 : []
+		}
+		for(let i = 0; i < prevData.length; i++){
+			result.qty += prevData[i].Qty
+			if(result.tables.length > 0) {
+				result.tables.forEach(e => {
+					if(e !== prevData[i].usscc){
+						console.log('пушим піддон - ', e)
+						result.tables.push(prevData[i].usscc)
+					}
+				});
+			} else if(result.tables.length == 0) {
+				result.tables.push(prevData[i].usscc)
+				console.log('пушим перший піддон - ', e)
+			}
+		};
+	}).then(result => {
+		console.log('наступний >>>')
+		window.location.replace("https://qa.avrora.lan/wms/newinvoice");
+		return result;
 	})
-	return prevData;//!!!!!!!(може треба ретурнити респонс реджект чи ні)
-}
-
+}*/
+/*
 async function parseData() {
-	const res = {
+	const result = {
 		num : numbers[i],
 		qty : 0,
 		lngth: prevData.length,
 		tables: []
 	}
 	for(let i = 0; i < prevData.length;i++){
-		res.qty += prevData[i].Qty
-		if(res.tables.length > 0) {
-			res.tables.forEach(e => {
+		result.qty += prevData[i].Qty
+		if(result.tables.length > 0) {
+			result.tables.forEach(e => {
 				if(e !== prevData[i].usscc){
 					console.log('пушим піддон - ', e)
-					res.tables.push(prevData[i].usscc)
+					result.tables.push(prevData[i].usscc)
 				}
 			});
-		} else if(res.tables.length == 0) {
-			res.tables.push(prevData[i].usscc)
+		} else if(result.tables.length == 0) {
+			result.tables.push(prevData[i].usscc)
 			console.log('пушим перший піддон - ', e)
 		}
 	};
 	result.push(res);
 	prevData = [];
 }
-
-async function exit() {
+*/
+/*async function exit() {
 	console.log('наступний >>>')
-
 	window.location.replace("https://qa.avrora.lan/wms/newinvoice");
 	// window.open("https://qa.avrora.lan/wms/newinvoice");
 
 	//получається треба якось ін'єкцію робити js, але щоразу нову по ходу. Бо мені здається, що буде перезавантажуватись сторінка.
 	//це треба перевірити.
 }
-
+*/
 //як перевіряти і, як закодити, щоб все робило тіп-топ, якщо магаз не відкрився?
 //по перше, пост робиться на ізі і далі, тобто перевіряти відповідь сервера про "у вас вже є активна перевірка" або,
 //щось типу того, але треба розуміти. коли постиш магаз то він дає відповідь і ці відповіді треба всі варіанти обробити.
